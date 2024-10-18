@@ -1,51 +1,38 @@
-import React, {useState, useEffect} from 'react'
+import React, {useContext, useState} from 'react';
+import { ClassContext } from '../ClassContext';
+
 
 const Form = () => {
-    const [name, setName] = useState('');
-    const [stateOrigin, setStateOrigin] = useState('');
-    const [profession, setProfession] = useState('');
-    const[message, setMessage] = useState('')
-
-const handleSubmit = (e) => {
-    e.preventDefault()
-    setMessage([name, stateOrigin, profession])
-}
-
-// let handleplus = () => {
-//     setName(name + 1)
-// }
-
-// let handleminus = () => {
-//     setName(name - 1)
-// }
+  let { setMysearch} = useContext(ClassContext)
+  
+  const [film, setFilm] =useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMysearch(film);
+    setFilm('');
+    
+    
+  }
+  
   return (
-    <div>
-
-            {/* <div>
-                <button onClick={handleplus}>+</button>
-                <span>{name}</span>
-                <button onClick={handleminus}>-</button>
-            </div> */}
-        <form action="" onSubmit={handleSubmit}>
-
-          
-            <div>
-                <label htmlFor="">Name</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter your name'/>
-            </div>
-            <div>
-                <label htmlFor="">State</label>
-                <input type="text" value={stateOrigin} onChange={(e) => setStateOrigin(e.target.value)} placeholder='Enter your state'/>
-            </div>
-            <div>
-                <label htmlFor="">Profession</label>
-                <input type="text" value={profession} onChange={(e) => setProfession(e.target.value)} placeholder='Enter your profesion'/>
-            </div>
+    <div className='bg-black p-[20px]'>
+      <form action="" onSubmit={handleSubmit}>
+      <div className='flex justify-between px-[50px]'>
+      <div>
+          <h1 className='text-3xl font-bold text-white'>n<span className='text-[red]'>flix</span></h1>
+        </div>
 
 
-            <button type='submit'>Submit</button>
-        </form>
-        {message}
+
+        <div>
+          <input type="text" placeholder='Search...' className='rounded-lg' value={film}  onChange={(e) => setFilm(e.target.value)} />
+          <input className='p-2 bg-gray-400 rounded text-amber-900-lg' type="submit" />
+        </div>
+        
+      </div>
+      </form>
+      
     </div>
   )
 }

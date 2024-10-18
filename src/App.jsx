@@ -1,21 +1,22 @@
-import './App.css';
+import React, {useState} from 'react';
+import {Route, Routes} from 'react-router-dom'
+import InfoContext from './ClassContext';
+import List from './components/List';
 import Form from './components/Form';
-import Header from './components/Header';
-import Task from './Task';
 
 
 
+const App = () => {
 
-function App() {
   return (
-    <div className="">
-      <Header title='Task Tracker' />
+   <>
+    <InfoContext>
       <Form />
-   <Task/>
-
-    
-    </div>
-  );
+      <List /> 
+    </InfoContext>
+   
+   </>
+  )
 }
 
-export default App;
+export default App
