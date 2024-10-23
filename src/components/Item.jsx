@@ -1,23 +1,63 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {Link} from 'react-router-dom'
+import { ClassContext } from '../ClassContext';
 
 const Item = ({x}) => {
+  let {deleteReview, editReview} = useContext(ClassContext)
+  const [isEditing, setIsEditing] = useState(false)
+  const [getTitle,  setGetTitle] = useState(x.title);
+  const [getBody, setGetBody] = useState(x.body)
+  
+  const handleEdit = () => {
+    const updatedTitle = {
+      title: getTitle,
+      body: getBody,
+      userId: x.userId
+    }
+    editReview(x.id, updatedTitle)
+    alert('Item successfully updated')
+    setIsEditing(false)
+  }
   return (
-  <Link to={`https://www.youtube.com/watch?v=${x.id.videoId}`}>
-    <div className='w-[320px] border-2 border-gray-500 m-10 p-4 rounded-lg'>
+  
+    <div>
+      {isEditing ?  (<>
+        <div>
+      <input type="text" value={getTitle} onChange={(e) => setGetTitle(e.target.value)} />
+
+      <textarea name="" id="" value={getBody} onChange={(e) => setGetBody(e.target.value)} ></textarea>
+    </div>
+    <button onClick={handleEdit}>Save</button>
+    <button onClick={() => setIsEditing(false)}>Cancle</button>
+      
+      </>): (   <div className='w-[320px] border-2 border-gray-500 m-10 p-4 rounded-lg'>
       <div>
-      <img src={x.snippet.thumbnails.high.url} alt="" />
+        <h1 className='text-2xl font-bold'>{x.title}</h1>
       </div>
       <div>
-        <p className='text-center'>{x.snippet.channelTitle}</p>
+        <p className='text-center'>{x.body}</p>
       </div>
 
       <div>
-        <span className='mr-10'>{x.snippet.publishTime}</span>
-        {/* <span >{x.snippet.publishedAt}</span> */}
+        
+       <button onClick={() => deleteReview(x.id)} className='bg-gray-400 border-2 border-black'>Delete</button>
+       <button className='ml-10 bg-gray-400 border-2 border-black' onClick={() => setIsEditing(true)}>Edit</button>
+     
       </div>
+    </div>)}
+     
+   
+
+
+    
+  
+    
     </div>
-  </Link>
+
+    
+
+   
+
   )
 }
 
